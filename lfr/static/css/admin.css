@@ -1,0 +1,71 @@
+#header {
+    height: auto;
+    color: #f7f9fa;
+    background-color: #5a5a5a;
+    padding: 5px 30px;
+}
+
+#branding h1 {
+    color: #f7f9fa;
+}
+
+div.breadcrumbs {
+    background: #504e4e;
+}
+
+div .breadcrumbs a {
+    padding: 5px 15px;
+    color: #f7f9fa;
+}
+
+div .breadcrumbs a:hover {
+    color: rgb(0, 0, 0, 0.5);
+}
+
+.module caption, #changelist-filter h2 {
+    background-color: #5a5a5a;
+    color: #f7f9fa;
+}
+
+a.section:link, a.section:visited {
+    color: #f7f9fa;
+    text-decoration: none;
+}
+
+.module h2, .module caption, .inline-group h2 {
+    background: #5a5a5a;
+    color: #f7f9fa;
+}
+
+.selector .selector-chosen h2 {
+    background: #5a5a5a;
+    color: #f7f9fa;
+}
+
+#changelist-filter ul li.selected a {
+    color: #5a5a5a;
+    font-weight: 600;
+}
+
+ul #changelist-filter ul a:focus, #changelist-filter ul a:hover, #changelist-filter ul li.selected a:focus, #changelist-filter ul li.selected a:hover {
+    color: #5a5a5a;
+}
+
+.button, input[type=submit], input[type=button], .submit-row input, a.button {
+    background: #5a5a5a;
+    color: #f7f9fa;
+}
+
+.button.default, input[type=submit].default, .submit-row input.default {
+    background: #5a5a5a;
+}
+
+.button:hover, input[type=submit]:hover, input[type=button]:hover, .submit-row input:hover, a.button:hover {
+    background-color: #f7f9fa;
+    color: #5a5a5a;
+}
+
+.button.default:hover, input[type=submit].default:hover, .submit-row input.default:hover {
+    background-color: #f7f9fa;
+    color: #5a5a5a;
+}

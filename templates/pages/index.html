@@ -1,0 +1,243 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %} | Welcome {% endblock %}
+{% block content %}
+    <!-- image carousel  -->
+    <div id="imageContentWrapper" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            {% for listing in listings%}
+            {% if forloop.first %}
+            <div class="carousel-item active">
+            {% else %}
+            <div class="carousel-item">
+            {% endif %}
+                <div class="carousel-image-wrapper">
+                    <img class="d-block w-100" src="{{ listing.photo_main.url }}" alt="First slide">
+                </div>
+                <div class="slide-content">
+                    <div class="slide-info">
+                        <h2 class="title">{{ listing.title }}</h2>
+                        <h2 class="price">${{ listing.price | intcomma}}</h2>
+                        <a href="{% url 'listing' listing.id %}" class="btn1">See Details</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <a class="carousel-control-prev" href="#imageContentWrapper" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#imageContentWrapper" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+    
+    <!-- Property search form -->
+    <section id="showcase" class="container">
+    {% include 'partials/_alerts.html' %}
+        <div class="container text-center">
+            <div class="form-text container">
+                <h1 class="display-4 mb-4">
+                    Property Searching
+                </h1>
+                <p class="lead">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Recusandae quas, asperiores
+                    eveniet
+                    vel nostrum magnam
+                    voluptatum tempore! Consectetur, id commodi!</p>
+            </div>
+            <div class="home-search">
+                <div class="overlay p-5">
+                    <div class="search">
+                        <form action="{% url 'search' %}">
+                            <!-- Form Row 1 -->
+                            <div class="form-row">
+                                <div class="col-md-4 mb-3">
+                                    <label class="sr-only">Keywords</label>
+                                    <input type="text" name="keywords" class="form-control"
+                                        placeholder="Keyword (Pool, Garage, etc)">
+                                </div>
+    
+                                <div class="col-md-4 mb-3">
+                                    <label class="sr-only">City</label>
+                                    <input type="text" name="city" class="form-control" placeholder="City">
+                                </div>
+    
+                                <div class="col-md-4 mb-3">
+                                    <label class="sr-only">State</label>
+                                    <select name="state" class="form-control">
+                                        <option selected="true" disabled="disabled">State (All)</option>
+                                        {% for key,value in state_choices.items %}
+                                        <option value="{{ key }}">{{ value }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- Form Row 2 -->
+                            <div class="form-row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="sr-only">Bedrooms</label>
+                                    <select name="bedrooms" class="form-control">
+                                        <option selected="true" disabled="disabled">Bedrooms (All)</option>
+                                        {% for key,value in bedroom_choices.items %}
+                                        <option value="{{ key }}">{{ value }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <select name="price" class="form-control" id="type">
+                                        <option selected="true" disabled="disabled">Max Price (Any)</option>
+                                        {% for key,value in price_choices.items %}
+                                        <option value="{{ key }}">{{ value }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary btn-block mt-4" type="submit">Submit Form</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Listings -->
+    <section id="listings" class="py-5">
+        <div class="container">
+            <h3 class="text-center mb-5">Latest Listings</h3>
+            <div class="row container m-auto">
+                {% if listings %}
+                {% for listing in listings %}
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card listing-preview">
+                        <div class="listings-img-wrap">
+                            <img class="card-img-top" src="{{ listing.photo_main.url }}" alt="">
+                        </div>
+                        <div class="card-img-overlay">
+                            <h2>
+                                <span class="badge badge-primary text-white">${{ listing.price | intcomma}}</span>
+                            </h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="listing-heading text-center">
+                                <a class="text-primary text-decoration-none" href="{% url 'listing' listing.id %}">
+                                    <h4>{{ listing.title }}</h4>
+                                    <p>
+                                        <i class="fas fa-map-marker text-primary"></i> {{ listing.city }} {{ listing.state }}, {{ listing.zipcode }}</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-primary">
+                        <div class="row text-white">
+                            <div class="col-3">
+                                <p class="feat"> Sqft: <br> <span>{{ listing.sqft }}</span></p>
+                            </div>
+                            <div class="col-3">
+                                <p class="feat"> Beds: <br> <span>{{ listing.bedrooms }}</span></p>
+                            </div>
+                            <div class="col-3">
+                                <p class="feat"> Baths: <br> <span>{{ listing.bathrooms }}</span></p>
+                            </div>
+                            <div class="col-3">
+                                <p class="feat"> Garages: <br> <span>{{ listing.garage }}</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <div class="col-md-12 container text-center">
+                    <p>No Latest Listing</p>
+                </div>
+                {% endif %}
+                <!-- Listing 1 -->
+            </div>
+        </div>
+    </section>
+    
+    <section id="services" class="py-5 bg-primary text-white">
+        <div class="container">
+            <div class="row px-3">
+                <div class="col-md-12 col-lg-6 col-sm-12">
+                    <div class="service-img px-1">
+                        <img src="{% static 'img/service.jpg'%}" alt="services">
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-6 col-sm-12">
+                    <div class="py-3 service-header">
+                        <h1>Our services</h1>
+                        <p>Our provide services are for</p>
+                    </div>
+                    <!-- service offer 1 -->
+                    <div class="service-list row">
+                        <div class="col-2 service-icons">
+                            <a href="">
+                                <i class="fa fa-comment"></i>
+                            </a>
+                        </div>
+                        <div class="service-info col-10">
+                            <h3>Consultant Service</h3>
+                            <p class="text-clr">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Recusandae, quod?
+                            </p>
+                        </div>
+                    </div>
+                    <!-- service offer 2 -->
+    
+                    <div class="service-list row py-2">
+                        <div class="col-2 service-icons">
+                            <a href="">
+                                <i class="fa fa-home"></i>
+                            </a>
+                        </div>
+                        <div class="service-info col-10">
+                            <h3>Properties Management</h3>
+                            <p class="text-clr">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Recusandae, quod?
+                            </p>
+                        </div>
+                    </div>
+                    <!-- service offer 3 -->
+                    <div class="service-list row">
+                        <div class="col-2 service-icons">
+                            <a href="">
+                                <i class="fa fa-briefcase"></i>
+                            </a>
+                        </div>
+                        <div class="service-info col-10">
+                            <h3>Renting and Selling</h3>
+                            <p class="text-clr">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Recusandae, quod?
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="clients">
+        <div class="container">
+            <div class="row px-3">
+                <div class="col-12 ">
+                    <div class="row py-5 m-auto">
+                        {% if clients %}
+                        {% for client in clients %}
+                            <div class="col-md-3 col-lg-3 col-sm-6">
+                                <a class="nav-link d-flex justify-content-center" href="{{ client.client_link }}">
+                                    <div class="client-img">
+                                        <img src="{{client.image.url}}" alt="client company image">
+                                    </div>
+                                </a>
+                            </div>
+                        {% endfor %}
+                        {% else %}
+                        <div class="col-md-12 container text-center">
+                            <p>No Client To Display</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
